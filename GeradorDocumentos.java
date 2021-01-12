@@ -164,5 +164,43 @@ public class GeradorDocumentos {
 
 		return pis;
 	}
+	
+	// Validador PisPasep
+	public boolean isPisPasepValido (String pisPasep) {
+		
+		String formula = "3298765432";
+		int total = 0;
+		int multiplicando = 0;
+		int multiplicador = 0;
+		boolean retorno = false;
+		if(pisPasep != null) {
+			int tamanho = pisPasep.length();
+			if (tamanho != 11) {
+				retorno = false;
+			}
+			else {
+				retorno = true;
+				for (int i=0; i<10; i++) {
+	
+					multiplicando = Integer.parseInt(pisPasep.substring(i, i+1));
+					multiplicador = Integer.parseInt(formula.substring(i, i+1));
+					total += multiplicando * multiplicador;
+				}
+				
+				int resto = 11 - total % 11;
+				
+				if(resto == 10 || resto == 11) {
+					resto = 0;
+				}
+	
+				int digito = Integer.parseInt("" + pisPasep.charAt(10));
+				
+				if(digito != resto) {
+					retorno = false;
+				}
+			}
+		}	
+		return retorno;
+	}
 
 }
